@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8' />
+    <title>Unos pitanja</title>
+
+    <link href='{{ STATIC_URL }}components/bootstrap.css/css/bootstrap.css' rel='stylesheet' />
+
+    <script type='text/javascript' src='{{ STATIC_URL }}components/jquery/jquery.js'></script>
+    <script type='text/javascript' src='{{ STATIC_URL }}components/bootstrap.css/js/bootstrap.js'></script>
+</head>
+<body>
+  <div class='row'>
+    <div class='container'>
+      <h1>Unos pitanja</h1>
+      <form>
+        <label>Pitanje:</label>
+        <textarea></textarea>
+
+        <label>Odgovori:</label>
+        <p>
+          <input class='input input-xlarge' type='text'></input>
+          <input class='input input-small' type='text'></input>
+        </p>
+        <!-- For each -->
+
+        <input type='submit' value='Salji dalje' class='btn btn-primary'></input>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>
