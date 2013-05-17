@@ -13,7 +13,7 @@
   <div class='row'>
     <div class='container'>
       <h1>Unos pitanja</h1>
-      <form>
+      <form method='post' action='upload' enctype="multipart/form-data">
         <label>Pitanje:</label>
         <textarea></textarea>
 
@@ -23,7 +23,7 @@
           <input class='input input-small' type='text'></input>
         </p>
         <!-- For each -->
-
+        <input type='file' name='slika'></input>
         <input type='submit' value='Salji dalje' class='btn btn-primary'></input>
 
       </form>
