@@ -10,7 +10,7 @@ class AnswerType(models.Model):
 class Question(models.Model):
     number = models.IntegerField()
     text = models.TextField()
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', null=True)
     answer_type = models.ForeignKey(AnswerType)
 
     def __unicode__(self):
@@ -20,7 +20,7 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     value = models.CharField(max_length=150)
-    answer_type = models.ForeignKey(AnswerType)
+    question = models.ForeignKey(Question)
 
     def __unicode__(self):
     	return self.text
