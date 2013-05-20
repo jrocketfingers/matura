@@ -4,7 +4,7 @@ class AnswerType(models.Model):
     name = models.CharField(max_length=15)
 
     def __unicode__(self):
-    	return self.name
+        return self.name
 
 
 class Question(models.Model):
@@ -14,7 +14,7 @@ class Question(models.Model):
     answer_type = models.ForeignKey(AnswerType)
 
     def __unicode__(self):
-    	return self.number
+        return self.number
 
 
 class Answer(models.Model):
@@ -23,4 +23,4 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
 
     def __unicode__(self):
-    	return self.text
+        return self.text

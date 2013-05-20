@@ -8,22 +8,39 @@
 
     <script type='text/javascript' src='{{ STATIC_URL }}components/jquery/jquery.js'></script>
     <script type='text/javascript' src='{{ STATIC_URL }}components/bootstrap.css/js/bootstrap.js'></script>
+
+    <script type='text/javascript'>
+      $(function()
+        {
+          question_template = "<input name='answer1' class='answer input span10' type='text'></input><input name='solution1' class='solution input span2' type='text'></input><br />";
+        });
+    </script>
 </head>
 <body>
   <div class='row'>
     <div class='container'>
       <h1>Unos pitanja</h1>
-      <form method='post' action='upload' enctype="multipart/form-data">
+      <form method='post' action='question' enctype="multipart/form-data">
+        <label>Broj pitanja:</label><input name='number' type='number'></input>
+        <label>Tip pitanja:</label>
+        <select name='type'>
+          {% for answer_type in answer_types %}
+          <option value='{{ answer_type.name }}'>{{ answer_type.name }}</option>
+          {% endfor %}
+        </select>
         <label>Pitanje:</label>
-        <textarea></textarea>
+        <textarea name='text'></textarea>
 
         <label>Odgovori:</label>
         <p>
-          <input class='input input-xlarge' type='text'></input>
-          <input class='input input-small' type='text'></input>
+          <input name='answer1' class='input span10' type='text'></input>
+          <input name='solution1' class='input span2' type='text'></input>
+          <br />
+          <input name='answer2' class='input input-xlarge' type='text'></input>
+          <input name='solution2' class='input input-small' type='text'></input>
         </p>
         <!-- For each -->
-        <input type='file' name='slika'></input>
+        <input type='file' name='image'></input>
         <input type='submit' value='Salji dalje' class='btn btn-primary'></input>
 
       </form>
