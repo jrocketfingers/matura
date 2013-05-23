@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
     <meta charset='UTF-8' />
-    <title>Unos pitanja</title>
+    <title>Prikaz pitanja</title>
 
     <link href='{{ STATIC_URL }}components/bootstrap.css/css/bootstrap.css' rel='stylesheet' />
 
@@ -12,28 +12,25 @@
 <body>
   <div class='row'>
     <div class='container'>
-      <h1>Unos pitanja</h1>
+      <h1>Pitanje {{ question.number }}</h1>
 
-      <form method='post' action='question' enctype="multipart/form-data">
-        <label>Broj pitanja:</label><input name='number' type='number' value='{{ question_number }}'></input>
-        <label>Tip pitanja:</label>
-        <select name='type'>
-          {% for answer_type in answer_types %}
-          <option value='{{ answer_type.name }}'>{{ answer_type.name }}</option>
+      <form>
+        <p>{{ question.text|linebreaks }}</p>
+        <div class='well'>
+          {% for answer in answers %}
+          {% ifequal question.answer_type.name 'biranje' %}
+            <label class='checkbox'>
+              <input data-solution='{{ answer.solution }}' type='checkbox'>{{ answer.text }}</input>
+            </label>
+          {% endifequal %}
+          {% ifequal question.answer_type.name 'povezivanje' %}
+            <input class='input span8' data-solution='{{ answer.solution }}' type='text'></input>
+            <label class='span2'>{{ answer.text }}</label>
+          {% endifequal %}
           {% endfor %}
-        </select>
-        <label>Pitanje:</label>
-        <textarea name='text'></textarea>
+        </div>
 
-        <label>Odgovori:</label>
-        <p>
-          <input name='answer1' class='input span10' type='text'></input>
-          <input name='solution1' class='last input span2' type='text'></input>
-          <br />
-        </p>
-        <!-- For each -->
-        <input type='file' name='image'></input>
-        <input type='submit' value='Salji dalje' class='btn btn-primary'></input>
+        <img src='{{ question.image }}'></img>
       </form>
 
     </div>

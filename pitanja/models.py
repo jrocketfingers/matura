@@ -8,18 +8,18 @@ class AnswerType(models.Model):
 
 
 class Question(models.Model):
-    number = models.IntegerField()
-    text = models.TextField()
+    number = models.IntegerField(unique=True)
+    text = models.TextField(blank=False)
     image = models.ImageField(upload_to='images/', null=True)
     answer_type = models.ForeignKey(AnswerType)
 
     def __unicode__(self):
-        return self.number
+        return str(self.number)
 
 
 class Answer(models.Model):
-    text = models.TextField()
-    value = models.CharField(max_length=150)
+    text = models.TextField(blank=False)
+    value = models.CharField(max_length=150, blank=False)
     question = models.ForeignKey(Question)
 
     def __unicode__(self):

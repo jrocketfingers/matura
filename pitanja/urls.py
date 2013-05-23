@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'pitanja.views.unos', name='unos'),
     url(r'^question$', 'pitanja.views.question', name='question'),
+    url(r'^question/(?P<redni_broj>\d+)$', 'pitanja.views.question', name='question'),
     # url(r'^pitanja/', include('pitanja.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
