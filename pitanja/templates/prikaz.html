@@ -6,6 +6,8 @@
 
     <link href='{{ STATIC_URL }}components/bootstrap.css/css/bootstrap.css' rel='stylesheet' />
 
+    <link href='{{ STATIC_URL }}style.css' rel='stylesheet' />
+
     <script type='text/javascript' src='{{ STATIC_URL }}components/jquery/jquery.js'></script>
     <script type='text/javascript' src='{{ STATIC_URL }}components/bootstrap.css/js/bootstrap.js'></script>
 </head>
@@ -14,25 +16,25 @@
     <div class='container'>
       <h1>Pitanje {{ question.number }}</h1>
 
-      <form>
-        <p>{{ question.text|linebreaks }}</p>
+      <form name='upitnik'>
+        <p class='lead'>{{ question.text|linebreaksbr }}</p>
         <div class='well'>
           {% for answer in answers %}
           {% ifequal question.answer_type.name 'biranje' %}
-            <label class='checkbox'>
-              <input data-solution='{{ answer.solution }}' type='checkbox'>{{ answer.text }}</input>
+            <label data-solution='{{ answer.value }}' class='checkbox'>
+              <input name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
             </label>
           {% endifequal %}
           {% ifequal question.answer_type.name 'povezivanje' %}
-            <input class='input span8' data-solution='{{ answer.solution }}' type='text'></input>
-            <label class='span2'>{{ answer.text }}</label>
+            <input name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
+            <label data-solution='{{ answer.value }}' class='span2'>{{ answer.text }}</label>
           {% endifequal %}
           {% endfor %}
         </div>
 
         <img src='{{ question.image }}'></img>
 
-        <input class='btn btn-primary' type='button' value='Proveri i nastavi'></input>
+        <input name='check' class='btn btn-primary' type='button' value='Proveri i nastavi'></input>
       </form>
 
     </div>
@@ -40,37 +42,22 @@
 
   <script type='text/javascript'>
     $(function()
+    {
+      var answer_number = {{ answers.count }};
+
+      $('[name=check]').on('click', function ()
       {
-        var answer_number = 1;
-
-        $(document).on('keydown', '.last', function(e)
+        $('[name=answer]').each(function (index)
         {
-          var keycode = e.keyCode || e.which;
-
-          if(keycode == 9)
-          {
-            e.preventDefault();
-            console.log('tab pressed');
-            createNewAnswer();
-          }
+          {% ifequal question.answer_type.name 'povezivanje' %}
+            if($(this).attr('data-solution').split(',').sort().join(',') == $(this).val().split(',').sort().join(','))
+              $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('correct');
+            else
+              $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('wrong');
+          {% endifequal %}
         });
-
-        function createNewAnswer()
-        {
-          var last_answer_length = $('[name=answer' + answer_number + ']').val().length;
-          var last_solution_length = $('[name=solution' + answer_number + ']').val().length;
-
-          if(last_solution_length > 0 || last_solution_length > 0)
-          {
-            answer_number++;
-            var answer_template = "<input name='answer" + answer_number + "' class='input span10' type='text'></input> <input name='solution" + answer_number + "' class='last input span2' type='text'></input>";
-
-            var last = $('.last').removeClass('last');
-            $(answer_template).insertAfter(last);
-            $('[name=answer' + answer_number + ']').focus();
-          }
-        }
       });
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,18 @@
+form label
+{
+    position: relative;
+    top: 1px;
+    padding: 4.5px;
+}
+
+form label.correct
+{
+    background-color: green;
+    color: white;
+}
+
+form label.wrong
+{
+    background-color: red;
+    color: white;
+}
