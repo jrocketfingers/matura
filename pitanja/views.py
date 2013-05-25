@@ -68,8 +68,12 @@ def question(request):
 
 
 def question_number(request):
-    question = Question.objects.get(number=redni_broj)
-    answers = question.answer_set.all()
+    try:
+        question_number = request.GET['number']
+    except:
+        question_number = 1
+
+    question = Question.objects.get(number=question_number)
     questions = [question]
 
-    return render(request, 'prikaz.html', { 'questions': questions})
+    return render(request, 'prikaz.html', { 'questions': questions })
