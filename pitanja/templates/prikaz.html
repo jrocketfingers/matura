@@ -14,12 +14,13 @@
 <body>
   <div class='row'>
     <div class='container'>
+      {% for question in questions %}
       <h1>Pitanje {{ question.number }}</h1>
 
       <form name='upitnik'>
         <p class='lead'>{{ question.text|linebreaksbr }}</p>
         <div class='well'>
-          {% for answer in answers %}
+          {% for answer in question.answer_set.all %}
           {% ifequal question.answer_type.name 'biranje' %}
             <label data-solution='{{ answer.value }}' class='checkbox'>
               <input name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
@@ -36,7 +37,7 @@
 
         <input name='check' class='btn btn-primary' type='button' value='Proveri i nastavi'></input>
       </form>
-
+    {% endfor %}
     </div>
   </div>
 

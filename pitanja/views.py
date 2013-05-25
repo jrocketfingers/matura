@@ -6,7 +6,7 @@ import json
 
 
 @csrf_exempt
-def unos(request):    
+def unos(request):
     if request.method == 'GET':
         answer_types = AnswerType.objects.all()
         return render(request, 'unos.html', { 'answer_types': answer_types })
@@ -53,19 +53,20 @@ def unos(request):
 
 
 def question(request):
-    # zasad koristim page parametar za jedno pitanje (id)
-    # page = request.GET['page']
-    question_number = request.GET['page']
+    page_number = request.GET['page']
     questions_per_page = 2
 
-    question = Question.objects.get(number=question_number)
-    answers = question.answer_set.all()
-
-    return render(request, 'prikaz.html', { 'question': question, 'answers': answers })
+    start_number = (int(page_number) - 1) * questions_per_page
+    questions = Question.objects.all()[start_number : start_number + questions_per_page]
+    if len(questions) != 0:
+        return render(request, 'prikaz.html', { 'questions': questions})
+    else:
+        return HttpResponse("Nema toliko pitanja")
 
 
 def question_number(request, redni_broj=1):
     question = Question.objects.get(number=redni_broj)
     answers = question.answer_set.all()
+    questions = [question]
 
-    return render(request, 'prikaz.html', { 'question': question, 'answers': answers })
+    return render(request, 'prikaz.html', { 'questions': questions})
