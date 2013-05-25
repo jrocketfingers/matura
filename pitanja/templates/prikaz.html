@@ -51,8 +51,15 @@
       {
         $('[name=answer]').each(function (index)
         {
+          // sorting resenja u data-solution
           var solution = $(this).attr('data-solution').split(',').sort().join(',');
-          var entry = $(this).prop('checked').toString().split(',').sort().join(',');
+
+          // scenario sa checkboxima mora da izvlaci informacije iz prop('checked')
+          // da bi vratio pravu vrednost
+          if($(this).attr('type') == 'checkbox')
+            var entry = $(this).prop('checked').toString();
+          else
+            var entry = $(this).val().split(',').sort().join(',');
 
           console.log(solution, entry);
 
