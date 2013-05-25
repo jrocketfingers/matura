@@ -67,13 +67,8 @@ def question(request):
         return HttpResponse("Nema toliko pitanja")
 
 
-def question_number(request):
-    try:
-        question_number = request.GET['number']
-    except:
-        question_number = 1
-
-    question = Question.objects.get(number=question_number)
+def question_number(request, number = 1):
+    question = Question.objects.get(number=number)
     questions = [question]
 
     return render(request, 'prikaz.html', { 'questions': questions })
