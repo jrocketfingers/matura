@@ -4,22 +4,12 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-def unos(request):
-    answer_types = AnswerType.objects.all()
-    return render(request, 'unos.html', { 'answer_types': answer_types })
 
 @csrf_exempt
-def question(request):
+def unos(request):    
     if request.method == 'GET':
-        # zasad koristim page parametar za jedno pitanje (id)
-        # page = request.GET['page']
-        question_number = request.GET['page']
-        questions_per_page = 2
-
-        question = Question.objects.get(number=question_number)
-        answers = question.answer_set.all()
-
-        return render(request, 'prikaz.html', { 'question': question, 'answers': answers })
+        answer_types = AnswerType.objects.all()
+        return render(request, 'unos.html', { 'answer_types': answer_types })
 
     elif request.method == 'POST':
         question = Question()
@@ -37,7 +27,6 @@ def question(request):
         question.save()
 
         answers = []
-        print post_data
         for key in [x for x in post_data if x.startswith('answer')]:
             current = key.replace('answer', '')
 
@@ -61,3 +50,22 @@ def question(request):
 
     else:
         return HttpResponse("Method not allowed.", status=405)
+
+
+def question(request):
+    # zasad koristim page parametar za jedno pitanje (id)
+    # page = request.GET['page']
+    question_number = request.GET['page']
+    questions_per_page = 2
+
+    question = Question.objects.get(number=question_number)
+    answers = question.answer_set.all()
+
+    return render(request, 'prikaz.html', { 'question': question, 'answers': answers })
+
+
+def question_number(request, redni_broj=1):
+    question = Question.objects.get(number=redni_broj)
+    answers = question.answer_set.all()
+
+    return render(request, 'prikaz.html', { 'question': question, 'answers': answers })

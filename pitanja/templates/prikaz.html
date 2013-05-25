@@ -32,7 +32,7 @@
           {% endfor %}
         </div>
 
-        <img src='{{ question.image }}'></img>
+        <img src='{{ MEDIA_URL }}{{ question.image }}'></img>
 
         <input name='check' class='btn btn-primary' type='button' value='Proveri i nastavi'></input>
       </form>
