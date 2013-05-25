@@ -24,3 +24,8 @@ class Answer(models.Model):
 
     def __unicode__(self):
         return self.text
+
+    def format_dopunjavanje(self):
+        replace_html = "<input name='answer' class='input span2' data-solution='{}' type='text'></input>"
+        solutions = self.value.split(';')
+        return self.text.replace('%', replace_html).format(*solutions)

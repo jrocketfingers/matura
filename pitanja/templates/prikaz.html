@@ -30,6 +30,9 @@
             <input name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
             <label data-solution='{{ answer.value }}' class='span2'>{{ answer.text }}</label>
           {% endifequal %}
+          {% ifequal question.answer_type.name 'dopunjavanje' %}
+            {{ answer.format_dopunjavanje|safe }}
+          {% endifequal %}
           {% endfor %}
         </div>
 
