@@ -53,7 +53,10 @@ def unos(request):
 
 
 def question(request):
-    page_number = request.GET['page']
+    try:
+        page_number = request.GET['page']
+    except:
+        page_number =1
     questions_per_page = 2
 
     start_number = (int(page_number) - 1) * questions_per_page
