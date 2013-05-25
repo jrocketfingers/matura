@@ -67,7 +67,7 @@ def question(request):
         return HttpResponse("Nema toliko pitanja")
 
 
-def question_number(request, redni_broj=1):
+def question_number(request):
     question = Question.objects.get(number=redni_broj)
     answers = question.answer_set.all()
     questions = [question]

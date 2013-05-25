@@ -53,12 +53,29 @@
       {
         $('[name=answer]').each(function (index)
         {
-          {% ifequal question.answer_type.name 'povezivanje' %}
-            if($(this).attr('data-solution').split(',').sort().join(',') == $(this).val().split(',').sort().join(','))
-              $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('correct');
-            else
-              $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('wrong');
-          {% endifequal %}
+          // sorting resenja u data-solution
+          var solution = $(this).attr('data-solution').split(',').sort().join(',');
+
+          // scenario sa checkboxima mora da izvlaci informacije iz prop('checked')
+          // da bi vratio pravu vrednost
+          if($(this).attr('type') == 'checkbox')
+            var entry = $(this).prop('checked').toString();
+          else
+            var entry = $(this).val().split(',').sort().join(',');
+
+          console.log(solution, entry);
+
+          var label = $($(this).parents('div')[0]).children('label');
+
+          if(solution == entry)
+          {
+            label.addClass('correct');
+            // $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('correct');
+          }
+          else
+          {
+            label.addClass('wrong');
+          }
         });
       });
     });
