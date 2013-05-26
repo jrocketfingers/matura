@@ -19,7 +19,7 @@ form label.wrong
 
 form input.correct
 {
-    background-color: green;
+    background-color: limegreen;
     color: white;
 }
 

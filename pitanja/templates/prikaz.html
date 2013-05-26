@@ -40,11 +40,13 @@
           {% endfor %}
         </div>
 
-        <img src='{{ MEDIA_URL }}{{ question.image }}'></img>
+        {% if question.image %}
+          <img src='{{ MEDIA_URL }}{{ question.image }}'></img>
+        {% endif %}
 
-        <input name='check' class='btn btn-primary' type='button' value='Proveri i nastavi'></input>
       </form>
-    {% endfor %}
+      {% endfor %}
+      <input name='check' class='btn btn-primary' type='button' value='Proveri'></input>
     </div>
   </div>
 
@@ -70,7 +72,7 @@
 
           if($($(this).parents('form')[0]).attr('data-type') == 'dopunjavanje')
           {
-            if(solution == entry)
+            if(solution.toLowerCase() == entry.toLowerCase())
               $(this).addClass('correct');
             else
             {
