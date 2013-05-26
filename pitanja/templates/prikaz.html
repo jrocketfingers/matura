@@ -23,14 +23,14 @@
           {% for answer in question.answer_set.all %}
 
             {% ifequal question.answer_type.name 'biranje' %}
-              <label data-number='{{ forloop.counter }}' class='checkbox'>
-                <input data-number='{{ forloop.counter }}' name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
+              <label data-number='{{ forloop.parentloop.counter }}{{ forloop.counter }}' class='checkbox'>
+                <input data-number='{{ forloop.parentloop.counter }}{{ forloop.counter }}' name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
               </label>
             {% endifequal %}
 
             {% ifequal question.answer_type.name 'povezivanje' %}
-              <input data-number='{{ forloop.counter }}' name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
-              <label data-number='{{ forloop.counter }}' class='span2'>{{ answer.text }}</label>
+              <input data-number='{{ forloop.parentloop.counter }}{{ forloop.counter }}' name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
+              <label data-number='{{ forloop.parentloop.counter }}{{ forloop.counter }}' class='span2'>{{ answer.text }}</label>
             {% endifequal %}
 
             {% ifequal question.answer_type.name 'dopunjavanje' %}
