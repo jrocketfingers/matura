@@ -6,10 +6,10 @@ import json
 
 
 @csrf_exempt
-def unos(request):
+def unos(request, number):
     if request.method == 'GET':
         answer_types = AnswerType.objects.all()
-        return render(request, 'unos.html', { 'answer_types': answer_types })
+        return render(request, 'unos.html', { 'question_number': number, 'answer_types': answer_types })
 
     elif request.method == 'POST':
         question = Question()
@@ -56,8 +56,8 @@ def question(request):
     try:
         page_number = request.GET['page']
     except:
-        page_number =1
-    questions_per_page = 2
+        page_number = 1
+    questions_per_page = 5
 
     start_number = (int(page_number) - 1) * questions_per_page
     questions = Question.objects.all()[start_number : start_number + questions_per_page]
@@ -72,3 +72,12 @@ def question_number(request, number = 1):
     questions = [question]
 
     return render(request, 'prikaz.html', { 'questions': questions })
+
+
+def overview(request):
+    overall_number = 327 # overall number; should get loaded from the settings
+    existing_questions = [int(question.number) for question in Question.objects.all()]
+    missing_questions = filter(lambda x: x not in existing_questions, range(1, overall_number + 1))
+    percentage_complete = len(existing_questions) / (overall_number / 100.0)
+
+    return render(request, 'overview.html', { 'missing_questions': missing_questions, 'percentage_complete': percentage_complete, 'overall_number': overall_number })

@@ -6,9 +6,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^unos$', 'pitanja.views.unos', name='unos'),
+    url(r'^unos/(?P<number>\d+)$', 'pitanja.views.unos', name='unos'),
     url(r'^questions$', 'pitanja.views.question', name='question'),
     url(r'^questions/(?P<number>\d+)$', 'pitanja.views.question_number', name='question-number'),
+    url(r'^overview$', 'pitanja.views.overview', name='overview'),
     # url(r'^pitanja/', include('pitanja.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

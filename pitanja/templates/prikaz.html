@@ -15,7 +15,7 @@
   <div class='row'>
     <div class='container'>
       {% for question in questions %}
-      <h1>Pitanje {{ question.number }}</h1>
+      <h3>Pitanje {{ question.number }}</h3>
 
       <form name='upitnik' data-type='{{ question.answer_type.name }}'>
         <p class='lead'>{{ question.text|linebreaksbr }}</p>
@@ -45,6 +45,7 @@
         {% endif %}
 
       </form>
+      <hr />
       {% endfor %}
       <input name='check' class='btn btn-primary' type='button' value='Proveri'></input>
     </div>

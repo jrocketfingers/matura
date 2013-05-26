@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8' />
+    <title>Pregled pitanja</title>
+
+    <link href='{{ STATIC_URL }}components/bootstrap.css/css/bootstrap.css' rel='stylesheet' />
+
+    <link href='{{ STATIC_URL }}style.css' rel='stylesheet' />
+
+    <script type='text/javascript' src='{{ STATIC_URL }}components/jquery/jquery.js'></script>
+    <script type='text/javascript' src='{{ STATIC_URL }}components/bootstrap.css/js/bootstrap.js'></script>
+</head>
+<body>
+  <div class='row'>
+    <div class='container'>
+      <h1>Overview</h1>
+      <div class='progress progress-striped'>
+        <div class='bar' style='width: {{ percentage_complete }}%'></div>
+      </div>
+      {% for question in missing_questions %}
+      <a href='unos/{{ question }}'>{{ question }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
