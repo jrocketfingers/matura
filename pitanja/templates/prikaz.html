@@ -17,22 +17,26 @@
       {% for question in questions %}
       <h1>Pitanje {{ question.number }}</h1>
 
-      <form name='upitnik'>
+      <form name='upitnik' data-type='{{ question.answer_type.name }}'>
         <p class='lead'>{{ question.text|linebreaksbr }}</p>
         <div class='well'>
           {% for answer in question.answer_set.all %}
-          {% ifequal question.answer_type.name 'biranje' %}
-            <label data-solution='{{ answer.value }}' class='checkbox'>
-              <input name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
-            </label>
-          {% endifequal %}
-          {% ifequal question.answer_type.name 'povezivanje' %}
-            <input name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
-            <label data-solution='{{ answer.value }}' class='span2'>{{ answer.text }}</label>
-          {% endifequal %}
-          {% ifequal question.answer_type.name 'dopunjavanje' %}
-            {{ answer.format_dopunjavanje|safe }}
-          {% endifequal %}
+
+            {% ifequal question.answer_type.name 'biranje' %}
+              <label data-number='{{ forloop.counter }}' class='checkbox'>
+                <input data-number='{{ forloop.counter }}' name='answer' data-solution='{{ answer.value }}' type='checkbox'>{{ answer.text }}</input>
+              </label>
+            {% endifequal %}
+
+            {% ifequal question.answer_type.name 'povezivanje' %}
+              <input data-number='{{ forloop.counter }}' name='answer' class='input span8' data-solution='{{ answer.value }}' type='text'></input>
+              <label data-number='{{ forloop.counter }}' class='span2'>{{ answer.text }}</label>
+            {% endifequal %}
+
+            {% ifequal question.answer_type.name 'dopunjavanje' %}
+              {{ answer.format_dopunjavanje|safe }}
+            {% endifequal %}
+
           {% endfor %}
         </div>
 
@@ -47,7 +51,6 @@
   <script type='text/javascript'>
     $(function()
     {
-      var answer_number = {{ answers.count }};
 
       $('[name=check]').on('click', function ()
       {
@@ -65,16 +68,25 @@
 
           console.log(solution, entry);
 
-          var label = $($(this).parents('div')[0]).children('label');
-
-          if(solution == entry)
+          if($($(this).parents('form')[0]).attr('data-type') == 'dopunjavanje')
           {
-            label.addClass('correct');
-            // $('label[data-solution="' + $(this).attr('data-solution') + '"]').addClass('correct');
+            if(solution == entry)
+              $(this).addClass('correct');
+            else
+            {
+              $(this).addClass('wrong');
+              $(this).val($(this).val() + ' (' + solution + ')');
+            }
           }
           else
           {
-            label.addClass('wrong');
+            var answer_number = $(this).attr('data-number');
+            var label = $('label[data-number=' + answer_number + ']');
+
+            if(solution == entry)
+              label.addClass('correct');
+            else
+              label.addClass('wrong');
           }
         });
       });

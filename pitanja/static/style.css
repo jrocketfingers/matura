@@ -16,3 +16,15 @@ form label.wrong
     background-color: red;
     color: white;
 }
+
+form input.correct
+{
+    background-color: green;
+    color: white;
+}
+
+form input.wrong
+{
+    background-color: red;
+    color: white;
+}
